@@ -8,6 +8,7 @@ import ComponentChat from '@/components/ComponentChat/Index'
 import ClassStyle from '@/components/ClassStyle/Index'
 import Lifecycle from '@/components/Lifecycle'
 import EventHandle from '@/components/EventHandle'
+import ConditionRender from '@/components/ConditionRender'
 Vue.use(Router)
 
 export default new Router({
@@ -51,6 +52,11 @@ export default new Router({
       path: '/EventHandle',
       name: 'EventHandle',
       component: EventHandle
+    },
+    {
+      path: '/ConditionRender',
+      name: 'ConditionRender',
+      component: ConditionRender
     }
   ]
 })

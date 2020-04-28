@@ -6,6 +6,7 @@ import DemoTest from '../components/DemoTest/Index'
 import ClassStyle from '../components/ClassStyle/Index'
 import Lifecycle from '../components/Lifecycle/Index'
 import EventHandle from '../components/EventHandle'
+import ConditionRender from '../components/ConditionRender'
 const routes = [
     {
         name: 'DemoTest',
@@ -46,6 +47,11 @@ const routes = [
         name: 'EventHandle',
         path: '/EventHandle',
         component: EventHandle
+    },
+    {
+        name: 'ConditionRender',
+        path: '/ConditionRender',
+        component: ConditionRender
     }
 ]
 export default routes
