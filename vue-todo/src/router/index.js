@@ -9,6 +9,7 @@ import ClassStyle from '@/components/ClassStyle/Index'
 import Lifecycle from '@/components/Lifecycle'
 import EventHandle from '@/components/EventHandle'
 import ConditionRender from '@/components/ConditionRender'
+import ListRender from '@/components/ListRender'
 Vue.use(Router)
 
 export default new Router({
@@ -57,6 +58,11 @@ export default new Router({
       path: '/ConditionRender',
       name: 'ConditionRender',
       component: ConditionRender
+    },
+    {
+      path: '/ListRender',
+      name: ListRender,
+      component: ListRender
     }
   ]
 })

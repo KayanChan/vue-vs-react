@@ -7,6 +7,7 @@ import ClassStyle from '../components/ClassStyle/Index'
 import Lifecycle from '../components/Lifecycle/Index'
 import EventHandle from '../components/EventHandle'
 import ConditionRender from '../components/ConditionRender'
+import ListRender from '../components/ListRender'
 const routes = [
     {
         name: 'DemoTest',
@@ -52,6 +53,11 @@ const routes = [
         name: 'ConditionRender',
         path: '/ConditionRender',
         component: ConditionRender
+    },
+    {
+        name: 'ListRender',
+        path: '/ListRender',
+        component: ListRender
     }
 ]
 export default routes

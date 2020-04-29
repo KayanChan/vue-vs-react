@@ -641,7 +641,7 @@ class EventHandle extends React.Component {
 }
 ```
 
-## 条件渲染
+## 条件渲染 - `ConditionRender`
 #### Vue
 `v-if`指令条件性渲染内容，false值时不会渲染 DOM 节点，DOM显示一个注释标志
 `v-if、v-else-if、v-else`需配合相邻使用
@@ -679,13 +679,26 @@ React通过`style`或者`class`来控制元素的显示隐藏
 ```jsx
 <div style={{ display: isShow ? 'block' : 'none' }}>显示</div>
 ```
-## 列表渲染
+## 列表渲染 - `ListRender`
 #### Vue
 `v-for`渲染列表，需要设置唯一的`key`值，key值能快速对比新旧虚拟DOM树的差异
 `v-for`也可以对对象进行遍历渲染，采用Object.keys的方式处理，可能不同JS引擎的效果不一致
 ```html
 <div v-for="(item, key) in list" :key="key">{{ item }}</div>
 <div v-for="(value, key, index) in obj" :key="key+index">{{ value }}</div>
+```
+#### React
+React通过`map()`去遍历数组，不设置key标识，默认使用索引作为key值(列表项目顺序会变化的话，不建议使用索引作为key值)
+对于对对象的遍历，可以`Object.key(obj).map()`或者`Object.entries(obj).map()`处理
+```jsx
+{ list.map((item, index) => <h6 key={index} id={item.id}>{ item.name }</h6>) }
+{ Object.keys(student).map((key, index) => <span key={index}>{index}.{key}:{student[key]} </span>) }
+{
+  Object.entries(student).map((item, index) => {
+    const [key, value] = item
+    return <span key={index}>{index}.{key}:{value}</span>
+  })
+}
 ```
 ## 计算属性
 
