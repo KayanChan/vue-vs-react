@@ -10,6 +10,7 @@ import Lifecycle from '@/components/Lifecycle'
 import EventHandle from '@/components/EventHandle'
 import ConditionRender from '@/components/ConditionRender'
 import ListRender from '@/components/ListRender'
+import ComputedAttr from '@/components/ComputedAttr'
 Vue.use(Router)
 
 export default new Router({
@@ -61,8 +62,13 @@ export default new Router({
     },
     {
       path: '/ListRender',
-      name: ListRender,
+      name: 'ListRender',
       component: ListRender
+    },
+    {
+      path: '/ComputedAttr',
+      name: 'ComputedAttr',
+      component: ComputedAttr
     }
   ]
 })

@@ -8,6 +8,7 @@ import Lifecycle from '../components/Lifecycle/Index'
 import EventHandle from '../components/EventHandle'
 import ConditionRender from '../components/ConditionRender'
 import ListRender from '../components/ListRender'
+import ComputedAttr from '../components/ComputedAttr/Index'
 const routes = [
     {
         name: 'DemoTest',
@@ -58,6 +59,11 @@ const routes = [
         name: 'ListRender',
         path: '/ListRender',
         component: ListRender
+    },
+    {
+        name: 'ComputedAttr',
+        path: '/ComputedAttr',
+        component: ComputedAttr
     }
 ]
 export default routes

@@ -700,7 +700,68 @@ React通过`map()`去遍历数组，不设置key标识，默认使用索引作�
   })
 }
 ```
-## 计算属性
+## 计算属性 - `ComputedAttr`
+#### Vue
+计算属性是基于它们的响应式依赖进行缓存的，只在相关响应式依赖发生改变时它们才会重新求值
+> 官方文档有关于 [计算属性 vs 方法](https://cn.vuejs.org/v2/guide/computed.html#%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%E7%BC%93%E5%AD%98-vs-%E6%96%B9%E6%B3%95)、[计算属性 vs watch](https://cn.vuejs.org/v2/guide/computed.html#%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7-vs-%E4%BE%A6%E5%90%AC%E5%B1%9E%E6%80%A7)的对比分析
+Vue的 computed 选项将提供函数作为此属性的 getter 函数，也可以直接设置属性的`get`与`set`
+```js
+computed: {
+  name () {
+    const { firstName, secondName } = this
+    return `${secondName} ${firstName}`
+  },
+  reversedMsg: {
+    get () {
+      return this.msg.split('').reverse().join('')
+    },
+    set (newValue) {
+      this.info = newValue
+    }
+  }
+}
+```
+
+#### React
+React Hook中 useMemo 可以实现类似 Vue 的计算属性的功能，useMemo接收一个用于计算的函数和依赖项数组作为参数传入，返回 memoized 值；在某个依赖项改变时才会重新计算 memoized 值
+无依赖数组，则每次渲染时都会进行计算
+
+React Hook中 useCallback接收一个内联回调函数和依赖项数组作为参数传入，返回该回调函数的 memoized 版本；在某个依赖项改变时，该回调函数就会更新
+
+`useCallback(fn, deps) == useMemo(() => fn, deps)`
+```jsx
+function UseMemo(props) {
+  const { num } = props
+  const [size, setSize] = useState(0)
+
+  const max = useMemo(() => Math.max(num, size), [num, size])
+
+  return (
+    <div>
+      <input type="text" value={size} onChange={(e) => setSize(e.target.value)}/> VS { num }
+      <div>Max: { max }</div>
+    </div>
+  )
+}
+
+function UseCallback(props) {
+  const { num } = props
+  const [size, setSize] = useState(0)
+  const [max, setMax] = useState(num)
+
+  const maxHandle = useCallback(value => {
+    setSize(value)
+    setMax(Math.max(num, value))
+  }, [num, size])
+
+  return (
+    <div>
+      <input type="text" value={size} onChange={(e) => maxHandle(e.target.value)}/> VS { num }
+      <div >Max: { max }</div>
+    </div>
+  )
+}
+```
 
 ## watch vs render
 
