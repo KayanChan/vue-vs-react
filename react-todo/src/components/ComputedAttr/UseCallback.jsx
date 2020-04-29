@@ -8,7 +8,7 @@ function UseCallback(props) {
   const maxHandle = useCallback(value => {
     setSize(value)
     setMax(Math.max(num, value))
-  }, [num, size])
+  }, [num])
 
   return (
     <div>

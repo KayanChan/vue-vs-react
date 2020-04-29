@@ -752,7 +752,7 @@ function UseCallback(props) {
   const maxHandle = useCallback(value => {
     setSize(value)
     setMax(Math.max(num, value))
-  }, [num, size])
+  }, [num])
 
   return (
     <div>
@@ -763,7 +763,96 @@ function UseCallback(props) {
 }
 ```
 
-## watch vs render
+## watch vs render - `Watcher`
+#### Vue
+Vue watch 选项根据响应数据(props、data、computed)的变化来进行异步操作或开销较大的操作
+> watch可以结合debounce来限制操作频率，后续可以补充一下 debounce & throttle
+监听某个属性时，提供函数将会在属性发生变化的时候执行
+除了提供函数的方式，还可以提供对象，里面含 `handler(fn,数据变化时执行)`、`immediate(bol,刷新触发一次handler)`和`deep(深度监听属性值的变化)`
+
+```html
+<template>
+  <div>
+    <input type="text" v-model="text" placeholder="输入后1秒成为历史输入记录"/>
+    <h4>历史输入记录:</h4>
+    <div v-for="(item, index) in history" :key="index">{{ item }}</div>
+    <input type="text" v-model="student.firstName" placeholder="输入英文姓">
+    {{ student.name }}
+  </div>
+</template>
+<script>
+const _ = require('lodash')
+export default {
+  name: 'Watcher',
+  data () {
+    return {
+      text: '',
+      history: [],
+      student: {
+        firstName: 'Chan',
+        secondName: 'Andy'
+      }
+    }
+  },
+  watch: {
+    text (newValue) {
+      this.debounceAddHistory(newValue)
+    },
+    student: {
+      handler (newValue) {
+        console.log('student watcher')
+        this.student.name = `${newValue.firstName} ${this.student.secondName}`
+      },
+      immediate: true,
+      deep: true
+    }
+  },
+  created () {
+    this.debounceAddHistory = _.debounce(this.addHistory, 1000)
+  },
+  methods: {
+    addHistory (value) {
+      if (value) {
+        this.history.push(value)
+        this.text = ''
+      }
+    }
+  }
+}
+</script>
+```
+#### React
+static getDerivedStateFromProps(nextProps, prevState)
+1. 会在调用 render 方法之前调用，并且在初始挂载及后续更新时都会被调用
+2. 返回一个对象来更新 state，如果返回 null 则不更新任何内容
+3. 使用场景： state 的值在任何时候都取决于 props
+
+componentDidUpdate(prevProps, prevState, snapshot)
+1. 更新后被立即渲染，首次渲染不执行
+2. 直接调用setState,必须被包裹在一个条件语句里面，否则导致死循环
+3. 常用场景：对比更新前后的props后执行副作用(如setState、操作DOM、网络异步请求等)
+
+> 后续可以探研一下 React Hook 对性能优化的处理
+```jsx
+static getDerivedStateFromProps(nextProps, prevState) {
+  if(nextProps.count !== prevState.count) {
+    return {
+      count: nextProps.count*2
+    }
+  }
+  return null
+}
+
+componentDidUpdate(preProps) {
+  if(preProps.count !== this.props.count ) {
+    this.setState(prevState => {
+      return {
+        history: [...prevState.history, this.props.count]
+      }
+    })
+  }
+}
+```
 
 ## ref
 

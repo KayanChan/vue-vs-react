@@ -11,6 +11,7 @@ import EventHandle from '@/components/EventHandle'
 import ConditionRender from '@/components/ConditionRender'
 import ListRender from '@/components/ListRender'
 import ComputedAttr from '@/components/ComputedAttr'
+import Watcher from '@/components/Watcher'
 Vue.use(Router)
 
 export default new Router({
@@ -69,6 +70,11 @@ export default new Router({
       path: '/ComputedAttr',
       name: 'ComputedAttr',
       component: ComputedAttr
+    },
+    {
+      path: '/Watcher',
+      name: 'Watcher',
+      component: Watcher
     }
   ]
 })

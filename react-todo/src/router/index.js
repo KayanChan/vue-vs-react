@@ -9,6 +9,7 @@ import EventHandle from '../components/EventHandle'
 import ConditionRender from '../components/ConditionRender'
 import ListRender from '../components/ListRender'
 import ComputedAttr from '../components/ComputedAttr/Index'
+import Watcher from '../components/Watcher/Index'
 const routes = [
     {
         name: 'DemoTest',
@@ -64,6 +65,11 @@ const routes = [
         name: 'ComputedAttr',
         path: '/ComputedAttr',
         component: ComputedAttr
+    },
+    {
+        name: 'Watcher',
+        path: '/Watcher',
+        component: Watcher
     }
 ]
 export default routes
