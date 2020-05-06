@@ -854,8 +854,171 @@ componentDidUpdate(preProps) {
 }
 ```
 
-## ref
+## ref - `Ref`
+ref 特性访问子组件实例或者子元素(DOM节点)
+适用范围：
+1. 管理焦点，文本选择或者媒体播放
+2. 触发强制动画
+3. 集成第三方DOM库
 
-## 表单(v-model vs value)
+#### Vue
+通过 ref 给子组件赋予一个ID引用
+`$root`可访问根实例、`$parent`可访问父级组件实例、`$ref`则访问子组件实例、子元素
+```html
+<template>
+<div>
+  <ChildDemo ref="child"/>
+  <form ref="form">
+    <input type="text" v-model="name" required>
+  </form>
+</div> 
+</template>
+<script>
+import ChildDemo from './ChildDemo.vue'
+export default {
+  name: 'ParentDemo',
+  components: { ChildDemo },
+  data () {
+    return {}
+  },
+  mounted () {
+    console.log('----$ref - component----')
+    console.log(this.$refs.child)
+    console.log('----$ref - DOM----')
+    console.log(this.$refs.form)
+  }
+}
+</script>
+```
 
-## 插槽(slot vs Render Props + this.props.children)
+#### React
+```jsx
+class ClassRef extends React.Component {
+  constructor() {
+    super()
+    this.inputRef = React.createRef()
+  }
+
+  componentDidMount() {
+    console.log(this.inputRef.current)
+    this.inputRef.current.focus()
+  }
+
+  render() {
+    return (
+      <div>
+        <h4>class refs</h4>
+        <input type="text" ref={this.inputRef}/>
+      </div>
+    )
+  }
+}
+```
+```jsx
+import React, { useRef, useEffect } from 'react'
+function Ref() {
+  const classRef = useRef(null)
+  useEffect(() => {
+    console.log(classRef.current)
+  }, [])
+  return <div>
+    <ClassRef ref={classRef}/>
+  </div>
+}
+```
+## 表单(v-model vs value) - `VModelValue`
+#### Vue
+v-model 在表单元素上创建双向数据绑定，根据控件类型自动选取正确的方法来更新元素
+- text、textarea 使用 value 属性和 input 事件
+- checkbox、radio 使用 checked 属性和 change 事件
+- select 使用 value 属性和 change 事件
+
+v-model 不会在输入法组合文字过程中得到更新，`value`X`input事件`可以得到更新
+`<input type="file" />`不能使用 v-model 管理组件数据，可以通过 refs 管理表单组件的数据
+```html
+<VModelComponent v-model="message"/>
+```
+```html
+<template>
+  <div>
+    <input type="text" v-model="msg" @input="onInput">
+  </div>
+</template>
+<script>
+export default {
+  name: 'VModelComponent',
+  props: ['value'],
+  data () {
+    return {
+      msg: this.value
+    }
+  },
+  methods: {
+    onInput (e) {
+      this.$emit('input', e.target.value)
+    }
+  }
+}
+</script>
+```
+
+#### React
+受控组件将 state 赋值给 value 属性，通过 setState 来更新 state
+对于非受控组件，可以使用ref从DOM节点中获取表单数据
+> 如果用class组件方式 如何实现
+```jsx
+export default function VModelValue() {
+  const [value, setValue] = useState('abc')
+
+  return <div>
+    <InputMsg value={value} inputChange={setValue} />
+    <div>value: {value}</div>
+  </div>
+}
+```
+```jsx
+function InputMsg(props) {
+  const { value, inputChange } = props
+  const [msg, setMsg] = useState(value)
+  const changeValue = (e) => {
+    setMsg(e.target.value)
+    inputChange(e.target.value)
+  }
+  return <input type="text" value={msg} onChange={changeValue}/>
+}
+```
+## 插槽(slot vs Render Props + this.props.children) - `SlotContent`
+
+#### Vue
+将`<slot>`元素作为承载分发内容的出口，让组件具有内容分发的功能
+Vue的插槽可分为 默认插槽、具名插槽和作用域插槽(有选择使用插槽组件内部的数据)
+- 如果不使用插槽，组件中的内容是不显示
+- 插槽<slot></slot>中的内容将作为缺省内容
+
+#### React
+react 中通过 this.props.children 和 Render props 实现类似vue中的插槽功能
+在class组件中使用`this.props.children`，在function组件中使用`props.children`
+通过多个render prop即可实现类似vue中具名插槽的功能(常用的react-router-dom中的Route的component prop就采用了典型的render prop的用法)
+```jsx
+class NamedSlot extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+  render() {
+    const { header, main, footer, children } = this.props
+    return (<div>
+      <header>
+        { header || (<div>Header content</div>) }
+      </header>
+      <main>
+        { main || (<div>Main content</div>) }
+      </main>
+      { children }
+      <footer>
+        { footer || (<div>Footer content</div>) }
+      </footer>
+
+    </div>)
+  }
+}
+```

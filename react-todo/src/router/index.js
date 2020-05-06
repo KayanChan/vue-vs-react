@@ -10,6 +10,9 @@ import ConditionRender from '../components/ConditionRender'
 import ListRender from '../components/ListRender'
 import ComputedAttr from '../components/ComputedAttr/Index'
 import Watcher from '../components/Watcher/Index'
+import Ref from '../components/Ref/Index'
+import VModelValue from '../components/VModelValue/Index'
+import SlotContent from '../components/SlotContent/Index'
 const routes = [
     {
         name: 'DemoTest',
@@ -70,6 +73,21 @@ const routes = [
         name: 'Watcher',
         path: '/Watcher',
         component: Watcher
+    },
+    {
+        name: 'Ref',
+        path: '/Ref',
+        component: Ref
+    },
+    {
+        name: 'VModelValue',
+        path: '/VModelValue',
+        component: VModelValue
+    },
+    {
+        name: 'SlotContent',
+        path: '/SlotContent',
+        component: SlotContent
     }
 ]
 export default routes

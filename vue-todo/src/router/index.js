@@ -12,6 +12,9 @@ import ConditionRender from '@/components/ConditionRender'
 import ListRender from '@/components/ListRender'
 import ComputedAttr from '@/components/ComputedAttr'
 import Watcher from '@/components/Watcher'
+import Ref from '@/components/Ref/ParentDemo'
+import VModelValue from '@/components/VModelValue'
+import SlotContent from '@/components/SlotContent/Index'
 Vue.use(Router)
 
 export default new Router({
@@ -75,6 +78,21 @@ export default new Router({
       path: '/Watcher',
       name: 'Watcher',
       component: Watcher
+    },
+    {
+      path: '/Ref',
+      name: 'Ref',
+      component: Ref
+    },
+    {
+      path: '/VModelValue',
+      name: 'VModelValue',
+      component: VModelValue
+    },
+    {
+      path: '/SlotContent',
+      name: 'SlotContent',
+      component: SlotContent
     }
   ]
 })
