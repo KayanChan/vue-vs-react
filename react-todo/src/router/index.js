@@ -13,6 +13,7 @@ import Watcher from '../components/Watcher/Index'
 import Ref from '../components/Ref/Index'
 import VModelValue from '../components/VModelValue/Index'
 import SlotContent from '../components/SlotContent/Index'
+import LogicReuse from '../components/LogicReuse/Index'
 const routes = [
     {
         name: 'DemoTest',
@@ -88,6 +89,11 @@ const routes = [
         name: 'SlotContent',
         path: '/SlotContent',
         component: SlotContent
+    },
+    {
+        name: 'LogicReuse',
+        path: '/LogicReuse',
+        component: LogicReuse
     }
 ]
 export default routes

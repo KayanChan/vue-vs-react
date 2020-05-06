@@ -670,6 +670,7 @@ render() {
   </div>
 }
 ```
+
 ## 元素显示控制
 #### Vue
 `v-show`控制显示隐藏
@@ -679,6 +680,7 @@ React通过`style`或者`class`来控制元素的显示隐藏
 ```jsx
 <div style={{ display: isShow ? 'block' : 'none' }}>显示</div>
 ```
+
 ## 列表渲染 - `ListRender`
 #### Vue
 `v-for`渲染列表，需要设置唯一的`key`值，key值能快速对比新旧虚拟DOM树的差异
@@ -700,6 +702,7 @@ React通过`map()`去遍历数组，不设置key标识，默认使用索引作�
   })
 }
 ```
+
 ## 计算属性 - `ComputedAttr`
 #### Vue
 计算属性是基于它们的响应式依赖进行缓存的，只在相关响应式依赖发生改变时它们才会重新求值
@@ -926,6 +929,7 @@ function Ref() {
   </div>
 }
 ```
+
 ## 表单(v-model vs value) - `VModelValue`
 #### Vue
 v-model 在表单元素上创建双向数据绑定，根据控件类型自动选取正确的方法来更新元素
@@ -987,6 +991,7 @@ function InputMsg(props) {
   return <input type="text" value={msg} onChange={changeValue}/>
 }
 ```
+
 ## 插槽(slot vs Render Props + this.props.children) - `SlotContent`
 
 #### Vue
@@ -1022,3 +1027,149 @@ class NamedSlot extends React.Component {
   }
 }
 ```
+
+## 逻辑复用(mixin vs HOC + Render Props) - `LogicReuse`
+#### Vue
+Mixin是一种分发 Vue 组件中可复用功能的非常灵活的方式
+- mixin的选项其值为对象的，如data、computed、methods、components和directives将混合成一个对象
+- mixin内部与组件内部数据冲突，组件优先
+- mixin内部生命周期函数与组件内部生命周期函数将==混合为一个数组==，均执行，先执行mixin的生命周期
+```JS
+export default {
+  data () {
+    return {
+      msg: 'Hello wolrd'
+    }
+  },
+  computed: {
+    sayWord () {
+      return `${this.person.name} said ${this.msg}`
+    }
+  },
+  created () {
+    console.log('mixin created')
+  },
+  mounted () {
+    console.log('mixin mounted')
+  },
+  methods: {
+    sayHello () {
+      console.log(this.sayWord)
+    }
+  }
+}
+```
+
+```HTML
+<template>
+  <div>
+    <div>name: {{ person.name }}</div>
+    <div>age: {{ age }} years old</div>
+    <button @click="sayHi">say hi</button>
+    <button @click="sayHello">say hello</button>
+  </div>
+</template>
+<script>
+import mixin from './mixin'
+export default {
+  name: 'Mixin',
+  mixins: [mixin],
+  data () {
+    return {
+      person: {
+        name: 'Lucy',
+        born: 2000
+      }
+    }
+  },
+  computed: {
+    age () {
+      return (new Date()).getFullYear() - this.person.born
+    }
+  },
+  created () {
+    console.log('component created')
+  },
+  mounted () {
+    console.log('component mounted')
+  },
+  methods: {
+    sayHi () {
+      console.log(`${this.person.name} said hi not ${this.msg}`)
+    }
+  }
+}
+</script>
+```
+
+#### React
+Render Props是指一种在 React 组件之间使用一个值为函数的 prop 共享代码的简单技术
+复用组件通过`this.props.render(this.state)`将渲染数据暴露给外层组件，让外层组件去控制数据的渲染处理
+```jsx
+class Mouse extends React.Component {
+  constructor() {
+    super()
+    this.state = {
+      x: 0,
+      y: 0
+    }
+  }
+
+  handleMouseMove = (e) => {
+    this.setState({
+      x: e.clientX,
+      y: e.clientY
+    })
+  }
+
+  render() {
+    return (
+      <div style={{height: '100vh'}} onMouseMove={this.handleMouseMove}>
+        {/* <p>当前鼠标位置(x: {this.state.x}, y: {this.state.y})</p> */}
+        { this.props.render(this.state) }
+      </div>
+    )
+  }
+}
+```
+
+```jsx
+<Mouse render={mouse => {
+  // console.log(mouse)
+  return (<div>
+    x-{mouse.x}, y-{mouse.y}
+  </div>)
+}}/>
+```
+
+HOC(High Order Component)
+- 高阶组件就是一个函数，接收第一个参数为组件，它返回一个新的组件
+- 高阶组件内部的包装组件和被包装组件之间通过props传递数据
+```jsx
+import React from 'react'
+import Mouse from './Mouse'
+// 函数，第一个参数为组件
+export default (WrapperComponent) => {
+  // 返回一个新组件
+  return class extends React.Component {
+    {/* 复用逻辑处理 */}
+    render() {
+      return (
+        {/* 复用逻辑已通过Mouse组件处理，结合Render Props将处理后数据传递到当前组件WrapperComponent中去 */}
+        <Mouse render={mouse => 
+          <WrapperComponent mouse={mouse} />
+        }/>
+      )
+    }
+  }
+}
+```
+## diff算法
+
+## 路由(vue-router cs react-router-dom)
+
+## 状态管理(vuex vs redux)
+
+## 文章参考
+- [关于Vue和React的一些对比及个人思考（上）](https://juejin.im/post/5e153e096fb9a048297390c1)
+- [关于Vue和React的一些对比及个人思考（中）](https://juejin.im/post/5e292746e51d451c8771d16e)
