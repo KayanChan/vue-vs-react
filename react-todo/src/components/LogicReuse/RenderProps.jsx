@@ -1,10 +1,6 @@
 import React from 'react'
 import Mouse from './Mouse'
 class MouseTracker extends React.Component {
-  constructor() {
-    super()
-  }
-
   render() {
     return (
       <div>

@@ -8,6 +8,7 @@ class UseComponent extends Component {
     }
 
     render() {
+        console.log('render')
         return (
             <div>
                 class组件

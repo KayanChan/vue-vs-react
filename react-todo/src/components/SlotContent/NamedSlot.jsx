@@ -1,9 +1,6 @@
 import React from 'react'
 
 class NamedSlot extends React.Component {
-  constructor(props) {
-    super(props)
-  }
   render() {
     const { header, main, footer, children } = this.props
     return (<div>

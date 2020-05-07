@@ -26,7 +26,7 @@ React 是一个用于构建**用户界面**的 JavaScript 库JavaScript 库。
 5. 在手机上创建原生应用方面，React处于领先位置 => React Native；Vue社区与阿里合作开发的创建原生应用 => Weex
 6. 生命周期函数的差异
 
-## 核心思想
+## 核心思想- `Performance`
 ##### Vue
 Vue的整体思想是经典的html(结构)+css(表现)+js(行为)的web应用；
 Vue2.0通过 Object.defineProperty 实现对数据的变化监听，精准实现组件级别的更新；
@@ -36,9 +36,11 @@ Vue3.0舍弃了 Object.defineProperty ，使用 proxy 的方式通过观察者�
 
 ##### React
 React的整体思想是函数式编程，jsx语法，all in js；
-当组件调用 setState 或 props 变化的时候，组件内部render会重新渲染，子组件也会随之重新渲染，可以通过 shouldComponentUpdate 或者 PureComponent 可以避免不必要的重新渲染
+当组件调用 setState 或 props 变化的时候，组件内部render会重新渲染，子组件也会随之重新渲染，可以通过 shouldComponentUpdate 或者 PureComponent等方式调整去避免不必要的重新渲染
 
-> 后续需要补充这个demo的实现
+class组件中，shouldComponentUpdate 和 React.PureComponent在基本类型数据传递均可起到优化作用，forceUpdate 和 shouldComponentUpdate(配合immutable.js)可以对引用类型数据传递起到优化作用
+
+函数组件中，React.memo可以对在给定相同 props 的情况下，包裹子组件，让其跳过父层更新导致的重复渲染
 
 ## 构建工具
 CLI (command-line interface) 命令行界面构建工具，可快速搭建大型单页应用
@@ -512,7 +514,7 @@ React的生命周期(V16.0之前)：
 React的生命周期(V16.0之后):
 初始化阶段：`constructor`
 挂载阶段：`getDerivedStateFromProps `-`render`-`componentDidMount`
-更新阶段：`getDerivedStateFromProps`-`shoudeComponentUpdate`-`render`-`getSnapshotBeforeUpdate`-`componentDidUpdate`
+更新阶段：`getDerivedStateFromProps`-`shouldComponentUpdate`-`render`-`getSnapshotBeforeUpdate`-`componentDidUpdate`
 卸载阶段：`componentWillUnmount`
 
 ## 事件处理 - `EventHandle`
