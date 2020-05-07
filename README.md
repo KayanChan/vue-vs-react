@@ -1165,7 +1165,89 @@ export default (WrapperComponent) => {
 }
 ```
 ## diff算法
+DOM Diff是指Virtual DOM 同步到 Real DOM的操作，即计算两个DOM Tree之间的差异，增量更新 Real DOM
+更新Real DOM的原则：能复用的节点绝不删除重新创建
+狭义的DOM Diff算法，一般指的是同级兄弟节点的范围之内(若不同层级之间的节点也进行对比，那相当于全量同步Real DOM，这违背Virtual DOM的设计初衷，实现不了性能的优化)
 
+==Q:== DOM Diff 是如何由【A、B、C、D、E、F、G】转换成【D、A、G、F、K、E】
+
+#### Vue
+1. 建立新序列（Virtual DOM）头（NS）尾（NE）、老序列（Real DOM）头（OS）尾（OE）一共4个指针
+2. 分别对OS/NS、OE/NS、OE/NE进行对比，操作移动、新增、删除
+
+```
+Real DOM(old)   : A B C D E F G
+Virtual DOM(new): D A G F K E
+
+OldStart OldEnd NewStart NewEnd
+A        G      D        E  
+1. D A B C E F G
+OldStart OldEnd NewStart NewEnd
+A        G      A        E
+OldStart OldEnd NewStart NewEnd
+B        G      G        E
+2. D A G B C E F
+OldStart OldEnd NewStart NewEnd
+B        F      F        E
+3. D A G F B C E
+OldStart OldEnd NewStart NewEnd
+B        E      K        E
+OldStart OldEnd NewStart NewEnd
+B        C      K        K
+4. D A G F K B C E
+5. D A G F K C E
+6. D A G F K E
+```
+
+#### React
+1. 首个节点不执行移动
+2. 按照Virtual DOM的顺序，依次与在Real DOM中的顺序进行对比，进行移动
+```
+Real DOM   : A B C D E F G
+Virtual DOM: D A G F K E
+
+遍历Virtual DOM
+0. D - A B C D E F G
+1. A - B C D A E F G
+   G - B C D A E F G
+2. F - B C D A E G F
+3. K - B C D A E G F K
+4. E - B C D A G F K E
+遍历Real DOM，Virtual DOM中不存在则删除
+5. C D A G F K E
+6. D A G F K E
+```
+
+#### 对比结论
+Vue采用从两端到中间的比对方式，React采用从左到右依次比对的方式
+在Real DOM的末尾节【d】与Virtual DOM的首节点【d】相同的时候，Vue高效于React
+```
+a b c d -> d c b a
+> react
+0. d - a b c d
+1. c - a b d c
+2. b - a d c b
+3. a - d c b a
+> vue
+OS OE NS NE
+a  d  d  a
+- d a b c
+- d b c a
+OS OE NS NE
+a  c  c  b
+- d c b a
+
+a b c d -> d a b c
+> react
+0. d - a b c d
+1. a - b c d a
+2. b - c d a b
+3. c - d a b c
+> vue
+OS OE NS NE
+a  d  d  c
+- d a b c
+```
 ## 路由(vue-router cs react-router-dom)
 
 ## 状态管理(vuex vs redux)
@@ -1173,3 +1255,4 @@ export default (WrapperComponent) => {
 ## 文章参考
 - [关于Vue和React的一些对比及个人思考（上）](https://juejin.im/post/5e153e096fb9a048297390c1)
 - [关于Vue和React的一些对比及个人思考（中）](https://juejin.im/post/5e292746e51d451c8771d16e)
+- [浅谈 React/Vue/Inferno 在 DOM Diff 算法上的异同](http://www.imooc.com/article/details/id/295545)
