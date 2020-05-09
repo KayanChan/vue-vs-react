@@ -1031,6 +1031,10 @@ class NamedSlot extends React.Component {
 ```
 
 ## 逻辑复用(mixin vs HOC + Render Props) - `LogicReuse`
+> 当多个逻辑复用时，就会不断嵌套代码(不期望代码如此嵌套)
+> React Hooks能较好地解决逻辑复用的问题，后续补充React Hooks解决逻辑复用的栗子
+> https://github.com/umijs/hooks/tree/master/packages/hooks/src
+
 #### Vue
 Mixin是一种分发 Vue 组件中可复用功能的非常灵活的方式
 - mixin的选项其值为对象的，如data、computed、methods、components和directives将混合成一个对象
@@ -1258,3 +1262,4 @@ a  d  d  c
 - [关于Vue和React的一些对比及个人思考（上）](https://juejin.im/post/5e153e096fb9a048297390c1)
 - [关于Vue和React的一些对比及个人思考（中）](https://juejin.im/post/5e292746e51d451c8771d16e)
 - [浅谈 React/Vue/Inferno 在 DOM Diff 算法上的异同](http://www.imooc.com/article/details/id/295545)
+- [为什么 React 现在要推行函数式组件，用 class 不好吗？](https://www.zhihu.com/question/343314784)
