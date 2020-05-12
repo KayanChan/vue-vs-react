@@ -15,6 +15,7 @@ import VModelValue from '../components/VModelValue/Index'
 import SlotContent from '../components/SlotContent/Index'
 import LogicReuse from '../components/LogicReuse/Index'
 import Performance from '../components/Performance/Index'
+import Hooks from '../components/Hooks/Index'
 const routes = [
     {
         name: 'DemoTest',
@@ -100,6 +101,11 @@ const routes = [
         name: 'Performance',
         path: '/Performance',
         component: Performance
+    },
+    {
+        name: 'Hooks',
+        path: '/Hooks',
+        component: Hooks
     }
 ]
 export default routes

@@ -1263,3 +1263,6 @@ a  d  d  c
 - [关于Vue和React的一些对比及个人思考（中）](https://juejin.im/post/5e292746e51d451c8771d16e)
 - [浅谈 React/Vue/Inferno 在 DOM Diff 算法上的异同](http://www.imooc.com/article/details/id/295545)
 - [为什么 React 现在要推行函数式组件，用 class 不好吗？](https://www.zhihu.com/question/343314784)
+- [react hooks模拟各个生命周期函数](http://www.fed123.com/javascriptnodejs/5750.html)
+- [十个案例学会 React Hooks](https://juejin.im/post/5ce53c636fb9a07eba2c1439)
+- [看完这篇，你也能把 React Hooks 玩出花](https://juejin.im/post/5d754dbde51d4561cd2466bf)
