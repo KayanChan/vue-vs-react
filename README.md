@@ -1258,6 +1258,15 @@ a  d  d  c
 
 ## 状态管理(vuex vs redux)
 
+## 兼容IE10及以上（配合使用antd）
+#### vue
+`babel-loader` - `7.1.5`
+`babel/core` - `6.26.3`
+
+1. `yarn add @babel/polyfill ant-design-vue`
+2. 入口文件`main.js`第一行添加`import '@babel/polyfill'`
+3. `main.js`全局引入antd样式`import 'ant-design-vue/dist/antd.css'`
+
 ## 文章参考
 - [关于Vue和React的一些对比及个人思考（上）](https://juejin.im/post/5e153e096fb9a048297390c1)
 - [关于Vue和React的一些对比及个人思考（中）](https://juejin.im/post/5e292746e51d451c8771d16e)
@@ -1266,3 +1275,5 @@ a  d  d  c
 - [react hooks模拟各个生命周期函数](http://www.fed123.com/javascriptnodejs/5750.html)
 - [十个案例学会 React Hooks](https://juejin.im/post/5ce53c636fb9a07eba2c1439)
 - [看完这篇，你也能把 React Hooks 玩出花](https://juejin.im/post/5d754dbde51d4561cd2466bf)
+- [Babel 7 转码](https://webpack.eleven.net.cn/content/babel/)
+- [create-react-app 支持IE（IE11/IE10/IE9）](https://blog.csdn.net/it_rod/article/details/100574389)
