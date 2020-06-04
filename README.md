@@ -1256,7 +1256,7 @@ a  d  d  c
 ```
 ## 路由(vue-router cs react-router-dom)
 
-## 状态管理(vuex vs redux)
+## 状态管理(vuex vs mobx)
 
 ## 兼容IE10及以上（配合使用antd）
 #### vue
@@ -1267,6 +1267,47 @@ a  d  d  c
 2. 入口文件`main.js`第一行添加`import '@babel/polyfill'`
 3. `main.js`全局引入antd样式`import 'ant-design-vue/dist/antd.css'`
 
+#### React
+`core-js` - `3.6.5`
+`babel-loader` - `8.1.0`
+`babel/core` - `7.10.2`
+> babel@7.4开始不再使用@babel/polyfill.
+> core-js@3的更新，@babel/polyfill无法提供core-js@2向core-js@3过渡，依靠core-js和regenerator-runtime替代@babel/polyfill
+> babel-loader 需要8.0.0 以上，@babel/core 需要 7.4.0 及以上
+1. `yarn eject`暴露`webpack.config.js`
+2. 安装基础依赖包`yarn add babel-loader @babel/core @babel/preset-env -D`
+3. @babel/polyfill替代方案`yarn add core-js regenerator-runtime`
+4. 入口文件`index.js`开始添加`import "core-js/stable"` `import "regenerator-runtime/runtime"`
+5. 缺少babel插件则安装`yarn add @babel/plugin-proposal-decorators @babel/plugin-syntax-dynamic-import @babel/plugin-proposal-class-properties`
+6. `package.json`添加babel配置、browserlist配置
+  ```
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "babel": {
+    "presets": [
+      "react-app",
+      [
+        "@babel/preset-env",
+        {
+          "useBuiltIns": "usage",
+          "corejs": 3
+        }
+      ]
+    ]
+  },
+  ```
+7. 此时IE报错`SCRTPT1002：语法错误`，删除`node_modules`，重新安装依赖
+8. 此时IE报错`SCRTPT5009：“Map”未定义`，在`webpack.config.js`中`entry`，数组两项元素互换位置，入口先加载`paths.appIndexJs`
+9. 此时IE报错`SCRIPT5007: 缺少对象 `，安装依赖`yarn add setprototypeof`，index.js添加依赖代码
+  ```
+  import setprototypeof from 'setprototypeof'
+  Object.setPrototypeOf = setprototypeof
+  ```
+10. 安装antd，`yarn add antd`，入口文件`index.js`引入全局antd樣式`import 'antd/dist/antd.css'`，局部引用antd組件`import { Button } from 'antd'`
+11. 使用antd组件，控制台输出很多`warning`，原因是`index.js`使用了`<React.StrictMode></React.StrictMode>`，去掉则控制台不会输出相关报错的`warning`
 ## 文章参考
 - [关于Vue和React的一些对比及个人思考（上）](https://juejin.im/post/5e153e096fb9a048297390c1)
 - [关于Vue和React的一些对比及个人思考（中）](https://juejin.im/post/5e292746e51d451c8771d16e)

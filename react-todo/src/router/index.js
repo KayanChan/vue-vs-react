@@ -16,6 +16,7 @@ import SlotContent from '../components/SlotContent/Index'
 import LogicReuse from '../components/LogicReuse/Index'
 import Performance from '../components/Performance/Index'
 import Hooks from '../components/Hooks/Index'
+import AntDesign from '../components/AntDesign/Index'
 const routes = [
     {
         name: 'DemoTest',
@@ -106,6 +107,11 @@ const routes = [
         name: 'Hooks',
         path: '/Hooks',
         component: Hooks
+    },
+    {
+        name: 'AntDesign',
+        path: '/AntDesign',
+        component: AntDesign
     }
 ]
 export default routes
