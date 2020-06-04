@@ -1,6 +1,9 @@
 # vue-vs-react
 关于Vue与React的差异对比
 
+目录
+[toc]
+
 ## 背景
 
 ##### Vue
@@ -518,7 +521,7 @@ React的生命周期(V16.0之后):
 卸载阶段：`componentWillUnmount`
 
 ## 事件处理 - `EventHandle`
-##### Vue
+#### Vue
 Vue使用 v-on 指令监听DOM事件，语法糖 @；
 Vue中 methods 选项中的方法可以访问原生DOM事件，通过 $event 显式传入；
 Vue为事件添加事件修饰符/按键修饰符，修饰符是由点开头的指令后缀来表示的；
@@ -1255,8 +1258,19 @@ a  d  d  c
 - d a b c
 ```
 ## 路由(vue-router cs react-router-dom)
+#### Vue
+- [Vue Router](https://router.vuejs.org/zh/guide/)
+
+#### React
+- [REACT ROUTER](https://react-router.docschina.org/)
 
 ## 状态管理(vuex vs mobx)
+#### Vue
+- [Vuex](https://vuex.vuejs.org/zh/guide/)
+
+#### React
+- [Mobx](https://cn.mobx.js.org/)
+- [笔记](https://github.com/KayanChan/react-study/blob/master/MOBX.MD)
 
 ## 兼容IE10及以上（配合使用antd）
 #### vue
