@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button } from 'antd'
+import { Link } from 'react-router-dom'
 
 export default () => {
   return (
@@ -10,6 +11,7 @@ export default () => {
       <br />
       <Button type="text">Text Button</Button>
       <Button type="link">Link Button</Button>
+      <Link to="/Hooks">准备前往React Hook</Link>
     </>
   )
 }
