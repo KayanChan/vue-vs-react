@@ -1322,6 +1322,10 @@ a  d  d  c
   ```
 10. 安装antd，`yarn add antd`，入口文件`index.js`引入全局antd樣式`import 'antd/dist/antd.css'`，局部引用antd組件`import { Button } from 'antd'`
 11. 使用antd组件，控制台输出很多`warning`，原因是`index.js`使用了`<React.StrictMode></React.StrictMode>`，去掉则控制台不会输出相关报错的`warning`
+
+## React Hook
+- [React Hook 笔记](https://github.com/KayanChan/vue-vs-react/blob/master/react-todo/ReactHookNote.md)
+
 ## 文章参考
 - [关于Vue和React的一些对比及个人思考（上）](https://juejin.im/post/5e153e096fb9a048297390c1)
 - [关于Vue和React的一些对比及个人思考（中）](https://juejin.im/post/5e292746e51d451c8771d16e)
