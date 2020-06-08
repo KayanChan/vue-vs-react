@@ -197,3 +197,85 @@ cont {count, msg} = useContext(CountContext)
   )
 ```
 
+# useMemo - 优化性能
+> useMemo可以优化每次渲染的耗时工作
+>
+> 在某个依赖项改变时才会重新计算memoizedValue值
+>
+> 若不存在依赖项，则每次渲染都会计算得到新的memoizedValue值
+>
+> 实则以空间换速度，通过内存来提升速度
+>
+> const memoizedValue = useMemo(() => computeExpensiveValue(a[,b...]), [a[, b...]])
+> 参数：
+> computeExpensiveValue: 必选，缓存的函数
+> [a[, b]]: 必选，依赖数组 
+> 返回值：
+> memoizedValue: memoize创建一个独立函数记忆任何函数，返回一个memoizedState，用来对比缓存
+
+父组件中含有两个子组件A/B；
+
+父组件关于子组件A的状态`timestamp`更新时，也会触发子组件B更新；
+
+父组件关于子组件B的状态`randomNum`更新时，也会触发子组件A更新；
+
+AB子组件各自的状态更新，却触发了兄弟组件不必要的更新，即是一种**性能耗损，不必要的性能浪费**
+
+```react
+const [timestamp, setTimestamp] = useState(+new Date())
+const [randomNum, setRandomNum] = useState(Math.floor(Math.random()*10 + 1))
+
+const childA = <ChildA timestamp={timestamp} />
+const childB = <ChildB randomNum={randomNum} />
+
+return (
+<>
+  <button onClick={() => {setTimestamp(+new Date())}}>触发组件A更新</button>
+  <button onClick={() => {setRandomNum(Math.floor(Math.random()*10 + 1))}}>触发组件B更新</button>
+  <div>{childA}</div>
+  <div>{childB}</div>
+</>
+)
+```
+
+useMemo经过函数计算得到一个确定的**记忆值**，只有在第二个参数**依赖项数组**的值发生变化时，才触发**缓存函数**的更新
+
+子组件A/B改变时，childA/childB才会重新渲染
+
+```react
+const childA = useMemo(() => <ChildA timestamp={timestamp} />, [timestamp])
+const childB = useMemo(() => <ChildB randomNum={randomNum} />, [randomNum])
+```
+
+# useRef - 获取DOM元素和保存变量
+
+> useRef(initialValue)
+>
+> 参数：
+>
+> ​		initialValue： 可选，初始值
+>
+> 返回值：
+>
+> ​		一个可变的ref对象，其`.current`属性初始化为initialValue
+
+useRef的两个主要作用：
+
+- 获取React JSX中的DOM元素，从而操作DOM的属性和值（一般不建议，React界面可通过状态去控制）
+- 保存变量（更建议采用useContext的方式处理）
+
+获取DOM元素
+
+```react
+const inputElement = useRef(null)
+<input type="text" ref={inputElement} />
+```
+
+操作DOM，React 都会将 ref 对象的 `.current` 属性设置为相应的 DOM 节点
+
+变更 `.current` 属性不会引发组件重新渲染
+
+```react
+inputElement.current.value = 'Hello World'
+```
+

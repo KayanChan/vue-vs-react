@@ -12,6 +12,7 @@ export default function UseEffectDemo () {
   }, [count])
 
   useEffect(() => {
+    console.log(`Hi Hi UseEffectDemo`)
     return () => {
       console.log(`Bye Bye UseEffectDemo`)
     }

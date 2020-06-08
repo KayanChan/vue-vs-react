@@ -4,6 +4,7 @@ import UseEffectDemo from './UseEffectDemo.jsx'
 import UseContextDemo from './UseContextDemo.jsx'
 import UseReducerDemo from './UserReducerDemo.jsx'
 import UseMemoDemo from './UseMemoDemo.jsx'
+import UseRefDemo from './UseRefDemo.jsx'
 import useUpdate from './hooks/useUpdate'
 
 export default function Hooks() {
@@ -27,6 +28,8 @@ export default function Hooks() {
       <hr/>
       <h4>UseMemo</h4>
       <UseMemoDemo />
+      <h4>UseRef</h4>
+      <UseRefDemo />
       <h4>React Hooks</h4>
       <div><b>useUpdate - </b>Count: { count } <button onClick={() => setCount(count => count+1)}>点击触发，响应更新</button></div>
     </div>
