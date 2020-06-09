@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom"
 import logo from './logo.svg'
 import './App.css'
 import routes from './router'
@@ -9,6 +9,7 @@ function App() {
     <Router>
       <div className="App">
         <img src={logo} className="App-logo" alt="logo" />
+        <Redirect path="/" to="/Hooks" />
         {
           routes.map((route, i) => {
             return (<Route

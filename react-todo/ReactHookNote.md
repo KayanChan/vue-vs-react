@@ -196,8 +196,54 @@ cont {count, msg} = useContext(CountContext)
     </div>
   )
 ```
+# useCallback - 记忆函数，优化性能
+> 函数式组件理解为class组件render函数的语法糖，每次重新渲染的时候，函数式组件内部所有的代码都会重新执行一遍
+>
+> useCallback把回调函数传递给经过优化的并使用引用相等性去避免非必要渲染的子组件
+>
+> const memoizedCallback = useCallback( () => { doSomething(a[, b...]) }, [a[, b...]])
+>
+> 参数：
+>
+> ​	匿名函数：必选，内联回调函数
+>
+> ​    [a[, b]]: 必选，依赖数组
+>
+> 返回值：
+>
+> ​	memoizedCallback ： 返回该回调函数的 memoized 版本，该回调函数仅在某个依赖项改变时才会更新
 
-# useMemo - 优化性能
+每次组件渲染，`handleClick`都会是一个新的引用，即传给子组件`Counter`的`onClick`一直在变；
+
+**函数组件在每次渲染的时候如果有传递函数的话都会重新渲染子组件**
+
+```react
+  const [count, setCount] = useState(0)
+
+  const handleClick = () => {
+    setCount1(count => count + 1)
+  }
+
+  return (
+    <>
+      <Counter value={count} onClick={handleClick}>Counter</Counter>
+    </>
+  )
+```
+
+通过 useCallback 获得一个记忆后的函数提供给后面组件进行渲染，只要子组件继承了 `PureComponent` 或者使用 `React.memo` 就可以有效避免不必要的 VDOM 渲染
+
+`[]`空数组代表无论什么情况下该函数都不会发生改变
+
+```react
+const increaseCounter1 = useCallback(() => {
+    setCount1(count1 => count1 + 1)
+}, [])
+```
+
+
+
+# useMemo - 记忆组件，优化性能
 > useMemo可以优化每次渲染的耗时工作
 >
 > 在某个依赖项改变时才会重新计算memoizedValue值
@@ -246,6 +292,14 @@ useMemo经过函数计算得到一个确定的**记忆值**，只有在第二个
 const childA = useMemo(() => <ChildA timestamp={timestamp} />, [timestamp])
 const childB = useMemo(() => <ChildB randomNum={randomNum} />, [randomNum])
 ```
+
+**useCallback 的功能完全可以由 useMemo 所取代，区别在于useCallback 不会执行第一个参数函数，而是将它返回，而 useMemo 会执行第一个函数并且将函数执行结果返回**
+
+```
+useCallback(fn, deps) <=> useMemo(() => fn, deps)
+```
+
+
 
 # useRef - 获取DOM元素和保存变量
 
