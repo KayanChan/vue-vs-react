@@ -302,7 +302,7 @@ useCallback(fn, deps) <=> useMemo(() => fn, deps)
 
 
 # useRef - 获取DOM元素和保存变量
-
+> useRef接收一个参数为ref的初始值，返回一个对象，对象的current字段指向实例/保存变量，实现获得目标节点实例或保存状态的功能
 > useRef(initialValue)
 >
 > 参数：
@@ -333,3 +333,18 @@ const inputElement = useRef(null)
 inputElement.current.value = 'Hello World'
 ```
 
+保存变量
+useRef保存的变量不会随着每次数据的变化重新生成，而是保持在我们最后一次赋值时的状态
+可以配合useCallback和useEffect实现`preProps/preState`的功能
+**手动更改`Ref.current`的值并不会引起关联状态的变动，即不会引起视图的变化**（ref在内存空间中开辟了一个堆空间将初始值存储起来，该值与初始化的值存储在不同的内存空间，视图显示的一直会是初始值）
+```react
+const isFirst = React.useRef(true)
+
+if (isFirst.current) {
+  isFirst.current = false
+
+  return true
+}
+
+return isFirst.current
+```

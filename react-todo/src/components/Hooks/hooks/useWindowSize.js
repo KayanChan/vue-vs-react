@@ -1,6 +1,6 @@
 import { useState ,useEffect ,useCallback } from 'react'
 
-export default function useWindowSize() {
+export default () => {
   const [size, setSize] = useState({
     width: document.documentElement.clientWidth,
     height: document.documentElement.clientHeight

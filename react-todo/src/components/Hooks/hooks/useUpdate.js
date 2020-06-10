@@ -1,12 +1,10 @@
-import { useRef, useEffect } from 'react'
+import { useState } from 'react'
 
-export default (fn) => {
-  const mounting = useRef(true)
-  useEffect(() => {
-    if (mounting.current) {
-      mounting.current = false
-    } else {
-      typeof fn === 'function' && fn();
-    }
-  })
+export default () => {
+  const [, setFlag] = useState()
+  const update = () => {
+      setFlag(Date.now())
+  }
+
+  return update
 }
