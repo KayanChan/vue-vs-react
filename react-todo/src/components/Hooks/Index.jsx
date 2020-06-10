@@ -7,10 +7,13 @@ import UseMemoDemo from './UseMemoDemo.jsx'
 import UseRefDemo from './UseRefDemo.jsx'
 import UseCallbackDemo from './UseCallbackDemo.jsx'
 import useWindowSize from './hooks/useWindowSize'
+import useModal from './hooks/useModal'
 
 export default function Hooks() {
   const size = useWindowSize()
-
+  const [modal, toggleModal] = useModal({
+    msg: '确认删除'
+  });
   return (
     <div>
       <h4>useState</h4>
@@ -35,6 +38,10 @@ export default function Hooks() {
       <UseRefDemo />
       <hr/>
       <h4>自定义hook</h4>
+      <div>
+        {modal}
+        <button onClick={toggleModal}>打开弹窗</button>
+      </div>
       <div>页面尺寸 {size.width} px X {size.height}px</div>
     </div>
   )

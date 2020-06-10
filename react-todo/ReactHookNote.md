@@ -348,3 +348,43 @@ if (isFirst.current) {
 
 return isFirst.current
 ```
+
+# 自定义Hooks
+
+自定义 Hook 是一个函数，其名称以 `use` 开头，函数内部可以调用其他的 Hook
+
+use开头是React会自动检查自定义 Hook 是否违反了 [Hook 的规则](https://zh-hans.reactjs.org/docs/hooks-rules.html)
+
+自定义Hooks函数偏向于功能，而组件偏向于界面和业务逻辑
+
+自定义Hooks更多是将多个组件或Hook之间的共享逻辑提取
+
+[umijs - React Hooks 库](https://github.com/umijs/hooks/blob/master/README.zh-CN.md)
+
+```react
+import { useState ,useEffect ,useCallback } from 'react'
+
+export default () => {
+  const [size, setSize] = useState({
+    width: document.documentElement.clientWidth,
+    height: document.documentElement.clientHeight
+  })
+
+  const onResize = useCallback(() => {
+    setSize({
+      width: document.documentElement.clientWidth,
+      height: document.documentElement.clientHeight
+    })
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('resize', onResize)
+    return () => {
+      window.removeEventListener('resize')
+    }
+  }, [])
+
+  return size
+}
+```
+
