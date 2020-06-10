@@ -17,6 +17,7 @@ import LogicReuse from '../components/LogicReuse/Index'
 import Performance from '../components/Performance/Index'
 import Hooks from '../components/Hooks/Index'
 import AntDesign from '../components/AntDesign/Index'
+import SchoolManage from '../pages/SchoolManage'
 const routes = [
     {
         name: 'DemoTest',
@@ -112,6 +113,11 @@ const routes = [
         name: 'AntDesign',
         path: '/AntDesign',
         component: AntDesign
+    },
+    {
+        name: 'SchoolManage',
+        path: '/SchoolManage',
+        component: SchoolManage
     }
 ]
 export default routes

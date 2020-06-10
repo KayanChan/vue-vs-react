@@ -6,12 +6,16 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import 'antd/dist/antd.css'
 import App from './App';
+import { ConfigProvider } from 'antd';
+import zhCN from 'antd/es/locale/zh_CN';
 import * as serviceWorker from './serviceWorker';
 
 Object.setPrototypeOf = setprototypeof
 
 ReactDOM.render(
-  <App />,
+  <ConfigProvider locale={zhCN}>
+    <App />
+  </ConfigProvider>,
   document.getElementById('root')
 );
 

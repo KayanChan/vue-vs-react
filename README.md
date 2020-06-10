@@ -1336,3 +1336,4 @@ a  d  d  c
 - [看完这篇，你也能把 React Hooks 玩出花](https://juejin.im/post/5d754dbde51d4561cd2466bf)
 - [Babel 7 转码](https://webpack.eleven.net.cn/content/babel/)
 - [create-react-app 支持IE（IE11/IE10/IE9）](https://blog.csdn.net/it_rod/article/details/100574389)
+- [react proptypes](https://react.docschina.org/docs/typechecking-with-proptypes.html)

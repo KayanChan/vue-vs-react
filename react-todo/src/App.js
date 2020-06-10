@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Redirect } from "react-router-dom"
-import logo from './logo.svg'
+// import logo from './logo.svg'
 import './App.css'
 import routes from './router'
 
@@ -8,8 +8,8 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Redirect path="/" to="/Hooks" />
+        {/* <img src={logo} className="App-logo" alt="logo" /> */}
+        <Redirect path="/" to="/SchoolManage" />
         {
           routes.map((route, i) => {
             return (<Route
